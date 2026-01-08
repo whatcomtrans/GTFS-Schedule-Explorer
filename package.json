@@ -1,0 +1,33 @@
+{
+  "name": "schedules",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "serve:eleventy": "cross-env ELEVENTY_ENV=local eleventy --serve",
+    "css-build": "node-sass --omit-source-map-url src/sass/main.css src/css/main.css",
+    "css-watch": "npm run css-build -- --watch",
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "WTA Scheduling Website",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "bulma": "^0.9.4",
+    "dotenv": "^16.3.1"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "axios": "^1.7.9",
+    "csvtojson": "^2.0.10",
+    "html-minifier-next": "^2.1.4",
+    "jest": "^29.7.0",
+    "leaflet": "^1.9.4",
+    "node-sass": "^9.0.0",
+    "pbf": "^4.0.1"
+  }
+}

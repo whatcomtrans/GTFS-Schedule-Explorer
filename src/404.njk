@@ -1,0 +1,27 @@
+---
+layout: base
+title: Not Found
+permalink: '/404/'
+heading: Whatcom Transportation Authority
+---
+
+<div>
+    <h1>Oops! Not not found!</h1>
+    <p>Sorry, but we couldn't find the page you were looking for. Try using our site's <a href="https://www.ridewta.com/search" alt="Search">search page</a> to find what you need.</p>
+</div>
+
+<!-- Redirect if in list of cutom redirects -->
+<script>
+    (function() {        
+        var url = window.location.href;
+        var t = "{{ redirects | dump }}";
+            t = JSON.parse(t.replaceAll('&quot;','"'));
+        console.log(t);
+        for (var i=0;i<t.length;i++) {
+            console.log('redirect: '+t[i].redirectName);
+            if (t[i].oldUrl == url) {
+                window.location.href = t[i].redirectUrl;
+            }
+        }
+    })();
+</script>

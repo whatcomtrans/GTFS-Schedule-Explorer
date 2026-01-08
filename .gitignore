@@ -1,0 +1,7 @@
+node_modules/
+_site/
+coverage/
+.env
+src/data/stops.kml
+src/data/wta-static-gtfs/
+src/data/skagit-static-gtfs/

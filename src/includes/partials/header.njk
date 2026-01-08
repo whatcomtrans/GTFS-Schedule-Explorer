@@ -1,0 +1,116 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <!-- WTA logo -->
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{{ config.agency_url }}">
+            <img src="/img/WTA_logo.png"/ alt="WTA logo">
+        </a>
+
+        {# Testing this section for new header layout #}
+        <div class="navbar-language" id="g-lang">
+            <img alt="Language" src="/img/language-solid.svg">
+        </div>
+        <div class="navbar-search" id="g-search">
+            <img alt="Search" src="/img/search-solid.svg">
+        </div>
+
+        {# <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" href="/menu" alt="menu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a> #}
+        
+        {% if "menu" in page.url %}
+        <a role="button" class="navbar-burger" onclick="history.go(-1)" alt="menu"> 
+            <span class="icon">
+                <i class="fas fa-times fa-lg">
+                    <img class="menu-close" alt="Close menu" src="/img/times.svg"/>
+                </i>
+            </span>
+        </a>
+        {% else %}
+        <a role="button" class="navbar-burger" href="{{ config.agency_url }}/menu" alt="menu">
+            <span class="icon">
+                <i class="fas fa-bars fa-lg">
+                    <img class="menu-bars-white" alt="Menu" src="/img/menu-white.svg"/>
+                </i>
+            </span>
+        </a>
+        {% endif %}
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+        <!-- Left fixed menu items, if needed -->
+        {# <div class="navbar-start">
+            <a class="navbar-item">Home</a>
+            <a class="navbar-item">
+                Documentation
+            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    More
+                </a>
+                <div class="navbar-dropdown">
+                    <a class="navbar-item">
+                        About
+                    </a>
+                    <a class="navbar-item is-selected">
+                        Jobs
+                    </a>
+                    <a class="navbar-item">
+                        Contact
+                    </a>
+                    <hr class="navbar-divider">
+                    <a class="navbar-item">
+                        Report an issue
+                    </a>
+                </div>
+            </div>
+        </div> #}
+
+        <!-- Right fixed menu items, if needed -->
+        <div class="navbar-end">
+            <div id="google_translate_element" tabindex="0"></div>
+            <div id="header1-google-search" class="googlesearch" tabindex="1">
+                <div class="gcse-searchbox-only"></div>
+            </div>
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-light" href="{{ config.agency_url }}/menu" alt="menu">
+                        <span class="icon">
+                            <i class="fas fa-bars">
+                                <img class="menu-bars" alt="Menu" src="/img/menu.svg"/>
+                            </i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+{# Below section is for drop down menu controls in mobile views, normally hidden #}
+<script>
+    let gsearch = document.getElementById("header1-google-search");
+    let glang = document.getElementById("google_translate_element");
+
+    document.getElementById("g-search").addEventListener("click", function() {
+        //close the g-lang
+        glang.classList.remove("open");
+        //toggle the g-search
+        gsearch.classList.toggle("open");
+    });
+    document.getElementById("g-lang").addEventListener("click", function() {
+        gsearch.classList.remove("open");
+        glang.classList.toggle("open");
+    });
+</script>
+{# Google Translate Initiation Scripts #}
+<script>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en'},'google_translate_element');
+    }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+{# Google Search Inits #}
+<script type="application/javascript" src="/scripts/initGoogleSearch.js"></script>
+<script async src="https://cse.google.com/cse.js?cx=c2529fccc56ea4f59"></script>

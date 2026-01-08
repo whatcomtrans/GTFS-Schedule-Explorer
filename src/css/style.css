@@ -1,0 +1,1422 @@
+/* html, body { */
+    /* height:100%; */
+    /* width: 100%; */
+    /* margin:0; */
+    /* padding:0; */
+    /* font-family: Arial, Helvetica, sans-serif; */
+/* } */
+
+/*
+header {
+    background-image: url("../img/header.jpg");
+    height:201px;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background-color: rgb(79, 79, 79);
+    height: 2em;
+    margin: 0;
+    padding: 0;
+}
+
+*/
+* {
+    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body, html {
+	/* height: ; */
+	width: 100%;
+	overflow-x: hidden;
+}
+
+#inner-body {
+	display: flex;
+	flex-direction: row;
+	width: 80%;
+	height: 100%;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+#nav-container {
+	display: flex;
+	flex-direction: column;
+	/* padding: 1em; */
+	margin-top: 1em;
+	margin-right: 2em;
+	width: 12.5%;
+	/* height: 5em;	 */
+	height: 100%;
+	align-items: flex-end;
+	
+}
+
+.nav-button {
+    color: #5c5c5c;
+	font-size: 1em;
+	padding: 0em 0em;
+    display:inline;
+	margin-bottom: 0.75em;
+	border: none;
+	background: none;
+}
+
+.nav-button[data-active="true"], .nav-button:hover {
+    cursor: pointer;
+	color: rgb(44, 72, 199);
+	font-weight:bold;
+}
+
+/*  */
+
+/* H2 */
+.content-header {
+    color: rgb(44, 72, 199);
+	font-size: 1.5em;
+	font-weight:bold;
+	height: 100%;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+.route_id:hover, .route_name:hover {
+    cursor: pointer;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ID's */
+
+#main-content {
+    font-size:1.1em;
+    margin: 1em 0em;
+	width: 60%;
+	height: 100%;
+	flex-grow: 1;
+}
+
+#routes_table {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	height: 100vh;
+	align-content: flex-start;
+	gap: 0em 2em;
+}
+
+#route-details {
+    display:none;
+}
+
+#stop-details {
+    display: none;
+}
+
+#stop-tabs {
+    margin-left: 0;
+	width: 100%;
+}
+
+#printThis {
+    margin: 1rem 1rem 0.5rem 1rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: auto;
+}
+
+#mapStopID {
+	height: 60px;
+    width: 60px;
+    border: none;
+    border-radius: 100%;
+    white-space: normal;
+    min-width: 0;
+    padding: 5px;
+    margin: 0 2rem 0 0;
+    background-color: #069;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 3px 3px 10px 0 #8E8E8E;
+    cursor: pointer;
+}
+
+#mapStopID:hover {
+	background-color: #069;
+	filter: brightness(1.2);
+}
+
+#streetInfo {
+	width: 60%;
+}
+
+#stop-details-name {
+    font-size: 1.2rem;
+    font-weight: bolder;
+    border-bottom: solid 1px black;
+    width: 100%;
+}
+
+#simpleStopTable {
+    margin: 1rem 1rem 0.5rem 1rem;
+	width: 90%;
+}
+
+#simpleStopTable th {
+	padding-right: 0.5rem;
+	padding-left: 0.5rem;
+	font-size: 1rem;
+}
+
+#stop-schedule {
+    margin: 1rem 1rem 0rem 1rem;
+}
+
+#stop-search-input {
+	padding-left: 0.2rem;
+    height: 1.5rem;
+    border: 1px solid #8E8E8E;
+    border-radius: 0.2rem;
+}
+
+#cityZip {
+	font-size: 1rem;
+}
+
+/* Table classes */
+
+.trips-table, .stop-time, .stop-name, .trip-header-row, .stops-table, .stop-table-route-header, .stop-table-time-header, .route-name, .route-stop-time{
+  border: 1px solid #cccccc;
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+}
+
+.tabs-and-table-container {
+	border: 1px solid #cccccc;
+	border-collapse: collapse;
+	border-radius: 5px 5px 0px 0px;
+	margin-top: 1em;
+}
+
+.table-container {
+	width: 100%;
+	height: 100%;
+	/* overflow: scroll; */
+}
+
+.trips-table {
+	table-layout: fixed;
+	
+	/* overflow: scroll; */
+}
+
+.direction-table-div {
+	overflow: scroll;
+	width: 100%;
+	height: 70vh;
+	/* height: 100%; */
+	/* height: 100vh; */
+}
+
+.stop-time, .stop-name {	
+	padding: 0.5em 0.5em;
+	font-size: 1rem;
+	width: 8em;
+	height: 1em;
+}
+
+.predicted-stop-time {
+	font-weight: bold;
+	border-radius: 1em;
+}
+
+.predicted-stop-time.late {
+	border: 1px solid rgba(220, 53, 69, 1);
+	background-color: rgba(220, 53, 69, 0.6);
+}
+
+.predicted-stop-time.early {
+	border: 1px solid rgba(255, 139, 7, 1);
+	background-color: rgba(255, 139, 7, 0.6);
+}
+
+.predicted-stop-time.on_time {
+	border: 1px solid rgba(25, 135, 84, 1);
+	background-color: rgba(25, 135, 84, 0.6);
+}
+
+.stop-table-route-header, .stop-table-time-header, .route-name, .route-stop-time{
+	padding: 0.5em 3em;
+}
+
+.stop-row:nth-child(even), .trip-row:nth-child(even) {
+    background-color: #eeeeee;
+}
+
+.stop-name {
+	color: rgb(44, 72, 199);
+	font-weight: normal;
+	position: sticky;
+	top: 0;
+	background-color:white;
+}
+
+.stop-name:hover {
+	cursor: pointer;
+}
+
+#stop-search-button, #find-option, #interactive-map-search-button {
+	border: none;
+	border-radius: 5px;
+	background-color: #069;
+	color: #fff;
+	font-size: 14px;
+	font-weight: bold;
+	margin-left: 10px;
+	padding: 0 0 2px 0;
+	line-height: 28px;
+	min-width: 0;
+	max-width: 76px;
+	padding: 0 6px;
+	vertical-align: middle;
+	-webkit-box-shadow: 3px 3px 10px 0 #8E8E8E;
+	box-shadow: 3px 3px 10px 0 #8E8E8E;
+	box-sizing: border-box;
+	flex-shrink: 0;
+	width: 25%;
+	max-height: 30px;
+	cursor: pointer;
+}
+
+#stop-search-button:hover, #find-option:hover, #interactive-map-search-button:hover {
+	background-color: #069;
+	filter: brightness(1.2);
+}
+
+
+#stop-selection {
+	width: 20%;
+}
+
+#stop-option {
+	width: 10rem;
+}
+
+#served-by-routes {
+	width: 80%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: .25em 0.5em;
+}
+
+.stop-served-by-route {
+	/* display: inline; */
+    width: auto;
+    padding: 0 !important;
+	
+}
+
+#stops-route-dropdown-div {
+	margin: 1em 0em;
+}
+
+#stops-calendar-div {
+	margin-left: 0em;
+	margin-right: 0em;
+}
+
+.stop-header-row {
+	display: flex;
+	justify-content: space-evenly;
+	
+}
+
+.stop-row {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+#simpleStopTable td{
+    border: 1px solid gray;
+    max-width: fit-content;
+    padding: 0.5rem;
+}
+
+/* Routes Classes */
+
+.route_id, .route_name {
+	padding-top: 1em;
+}
+
+.route_id {
+    color: rgb(44, 72, 199);
+    font-weight:bold;
+    padding-right: 1em;
+}
+
+.route_name {
+    font-weight: normal;
+}
+
+#routeMap {
+	display: none;
+	height: 25%;
+	width: 25%;
+	margin: auto 1rem;
+	padding: 0;
+	float: left;
+	position: relative;
+}
+
+#modalBtn {
+	position: absolute;
+  	top: 0px;
+  	right: 0px;
+  	width: 24px;
+  	height: 24px;
+  	cursor: pointer;
+  	z-index: 10;
+	background-color: gray;
+	border-radius: 4px;
+}
+
+/* .tripDirectionButton { */
+	/* margin-right: 0.75em; */
+	/* padding: .25em .35em; */
+	/* border: 2px solid blue; */
+/* } */
+/* .tripDirectionButton:hover { */
+    /* cursor: pointer; */
+/* } */
+
+/* Tabs classes */
+
+.tabsMain {
+	display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+.tabs-topbar {
+    display: flex;
+    flex-shrink: 0;
+    background: #cccccc;
+    justify-content: left;
+	border-radius: 5px;
+	/* text-align: center; */
+}
+
+.tabs-button {
+    display: block;
+    padding: 0.5rem;
+    margin: 0.2rem 0.2rem 0 0.2rem;
+    background: #eeeeee;
+    font-size: 1rem;
+    border: none;
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+	border-bottom: 1px solid #cccccc;
+	border-radius: 5px 5px 0px 0px;
+}
+
+/* .tabs-button:active { */
+    /* background: #dddddd; */
+	/* border-bottom: 1px solid white; */
+/* } */
+.controls-container button {
+	border: none;
+    border-radius: 5px;
+    background-color: #069;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 10px;
+    line-height: 28px;
+    padding: 0 10px;
+    vertical-align: middle;
+    -webkit-box-shadow: 3px 3px 10px 0 #8E8E8E;
+    box-shadow: 3px 3px 10px 0 #8E8E8E;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    max-height: 30px;
+    cursor: pointer;
+	align-self: auto;
+}
+
+.controls-container button:hover {
+	background-color: #069;
+    filter: brightness(1.2);
+}
+
+.tabs-button[data-active="true"] {
+	background: white;
+	border: 1px solid black;
+	border-bottom-color: white;
+}
+
+.tabs-button[data-active="false"]:hover {
+	background-color: #e4e4e4;
+}
+
+.calendar-div label,
+.stop-selector-div label {
+	font-size: 1rem;
+}
+
+.calendar-div input{
+	padding-left: 0.2rem;
+	height: 1.5rem;
+	border: 1px solid #8E8E8E;
+	border-radius: 0.2rem;
+}
+
+.stops-selector {
+	max-width: 100%;
+	margin-left: 1px;
+	margin-top: 0.6em;
+	border-radius: 5px;
+}
+
+#selector-buttons {
+	display: inline-block;
+}
+
+/* .tabs-button--active { */
+    /* border-bottom: 1px solid black; */
+/* } */
+
+/* .stop-tabs-content { */
+    /* padding: 1rem; */
+    /* font-size: 0.8rem; */
+    /* display: none; */
+/* } */
+
+/* .stop-tabs-content--active { */
+    /* display: block; */
+/* } */
+
+/*Stop Details*/
+
+
+
+/* Maps Stuff */
+#interactive-map-container {
+	display: none;
+	height: 100%;
+	width: 100%;
+}
+
+#interactive-map {
+  height: 80vh;
+  width: 100%;
+  /* position: fixed; */
+  margin: 1em 0em;
+}
+
+#map-location-error-box {
+	/* font-weight: bold; */
+	font-style: italic;
+	font-size: 0.75em;
+	margin: 0.5em 0;
+	padding: 0.5em;
+	border: 1px solid rgba(255, 139, 7, 1);
+	background-color: rgba(255, 139, 7, 0.6);
+	border-radius: 1em;
+}
+
+#interactive-map-search-input {
+	padding-left: 0.2rem;
+    height: 1.5rem;
+    border: 1px solid #8E8E8E;
+    border-radius: 0.2rem;
+	width: 18rem; 
+}
+
+#stop-streetview {
+	all: unset;
+	width: 90%;
+	height: 500px;
+	margin: 1rem auto;
+	position: relative;
+	padding: 0;
+	z-index: 1;
+}
+
+/*Route Map Modal*/
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: auto;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+  
+/* Modal Content/Box */
+.modal-content-main {
+  	position: relative;
+  	margin: 5% auto;
+  	padding: 20px;
+  	background-color: white;
+  	border: 1px solid #888;
+  	width: 80%;
+	height: auto;
+  	max-width: 500px;
+  	max-height: 100vh;
+  	overflow: hidden;
+  	display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
+
+#routeMapImageModal {
+	width: 100%;
+	height: auto;
+	max-width: 100%;
+	max-height: 80vh;
+	object-fit: contain;
+}
+
+/* The Close Button */
+.close {
+	position: absolute;
+	top: 0px;
+	right: 10px;
+	color: #aaa;
+	font-size: 28px;
+	font-weight: bold;
+	cursor: pointer;
+}
+  
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+/*Trip Planner*/
+#tripPlanner {
+	margin: 0 0 1rem 2rem;
+	background-color: rgba(0,153,204,0.15);
+	width: 20%;
+	height: 25.75rem;
+	border-left: 2px solid #4d4d4d;
+	border-bottom: 2px solid #4d4d4d;
+	border-radius: 0 0 0 23px;
+}
+
+#TP-title {
+	margin: 2rem 1rem 1rem 1rem;
+	font-size: 1.2rem;
+}
+
+#google-form {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	width: 100%;
+	margin-left: 1rem;
+}
+
+#initandEnd {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	width: 100%;
+}
+
+#initandEnd input{
+	padding-left: 0.2rem;
+    height: 1.5rem;
+    border: 1px solid #8E8E8E;
+    border-radius: 0.2rem;
+}
+
+#google-form button {
+	height: 75px;
+    width: 75px;
+    border: none;
+    border-radius: 100%;
+    white-space: normal;
+    min-width: 0;
+    padding: 5px;
+    margin: 0.5rem 1.5rem 1rem 1rem;
+    background-color: #069;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+	box-shadow: 3px 3px 10px 0 #8E8E8E;
+	cursor: pointer;
+}
+
+#google-form button:hover {
+	background-color: #069;
+	filter: brightness(1.2);
+}
+
+#google-form a {
+    color: #069;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 11px;
+    text-align: left;
+}
+
+#google-form input {
+    width: 100%;
+	flex: 1;
+}
+
+#TP-routelist, #TP-stopsearch, #TP-interactivemap{
+	margin-top: 1rem;
+	margin-left: 1rem;
+}
+
+#TP-routelist select {
+	width: 50%;
+    height: 1.5rem;
+    border: 1px solid #8E8E8E;
+    border-radius: 0.2rem;
+}
+
+#TP-stopsearch input {
+	width: 50%;
+	padding-left: 0.2rem;
+    height: 1.5rem;
+    border: 1px solid #8E8E8E;
+    border-radius: 0.2rem;
+}
+
+#TP-interactivemap p {
+	width: 50%;
+	font-size: 0.75rem;
+}
+
+.TP-map-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.TP-button {
+	border: none;
+    border-radius: 5px;
+    background-color: #069;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 10px;
+    padding: 0 0 2px 0;
+    line-height: 28px;
+    min-width: 0;
+    min-width: 76px;
+    padding: 0 6px;
+    vertical-align: middle;
+    -webkit-box-shadow: 3px 3px 10px 0 #8E8E8E;
+    box-shadow: 3px 3px 10px 0 #8E8E8E;
+    box-sizing: border-box;
+	flex-shrink: 0;
+	width: 25%;
+	max-height: 30px;
+	cursor: pointer;
+}
+
+.TP-button:hover {
+    background-color: #069;
+	filter: brightness(1.2);
+}
+
+#Container {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+@media (max-width: 485px) {
+	body #TP-routelist select {
+        width: 75%;
+    }
+
+	body #TP-stopsearch input {
+        width: 75%;
+    }
+
+	body #TP-interactivemap p {
+		width: 76%;
+		font-size: 0.8rem;
+	}
+
+	body #TP-interactiveMap-btn {
+		margin-left: 0.6rem;
+	}
+}
+
+@media (max-width: 550px) {
+	body #routeMap {
+		width: auto;
+	}
+
+    body #modalBtn {
+		visibility: hidden;
+	}
+
+	.stop-table-route-header {
+		font-size: 1rem;
+	}
+
+	.stop-table-time-header {
+		font-size: 1rem;
+	}
+
+	body .route-stop-time {
+		font-size: 0.75rem;
+	}
+
+	body .route-name {
+		font-size: 0.75rem;
+	}
+
+	body .tabs-button {
+		font-size: 0.8rem;
+	}
+
+	body #simpleStopTable th{
+		font-size: 0.9rem;
+	}
+}
+
+/*@media screen and (max-width: 900px) {*/
+@media (max-width: 680px) {
+	#inner-body {
+		display: flex;
+		flex-direction: column;
+		width: 90%;
+		align-items: flex-start;
+		justify-content: flex-start;
+		margin: auto;
+		font-size: 2em;
+	}
+	
+	#nav-container {
+		display: none;
+		flex-direction: row;
+		margin-top: 1em;
+		margin-right: 0em;
+		width: 100%;
+		justify-content: space-evenly;
+	}
+	
+	.nav-button {
+		font-size: 1.25em;
+	}
+	
+	#main-content {
+		/* font-size: 2em; */
+		width: 100%;
+		margin: 0 0 1em 0;
+	}	
+	
+	.content-header{
+		/* font-size: 1.5em; */
+		margin-bottom: -0.5rem;
+	}
+	
+	body #routes_table {
+		display: block;
+		height: 100%;
+	}
+
+	.route_id {
+		font-size: 1.25rem;
+	}
+
+	.route_name {
+		font-size: 1.25rem;
+	}
+	
+	#routeMap {
+		height: 90%;
+		width: 90%;
+		/* display: none; */
+	}
+	
+	.tabs-topbar {
+		flex-direction: row;
+		width: 100%;
+	}
+	
+	.tabs-button {		
+		font-size: 0.8rem;
+		height: 2.5rem;
+		/* padding:  */
+	}
+	
+	#direction-tabs-topbar {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.stop-time, .stop-name {	
+		font-size: 0.8rem;
+		width: 6rem;
+	}
+
+	.stop-row {
+
+	}
+
+	.route-stop-time, .route-name {
+		font-size: 1rem;
+	}
+	
+	#stop-search-input, #interactive-map-search-input, #stop-search-button, #interactive-map-search-button,
+	.calendar {
+		font-size: 1em;
+	}
+
+	#find-option {
+		margin-bottom: 0.2rem;
+	}
+	
+	#stops-route-dropdown-div, .calendar-div {
+		font-size: 1rem;
+	}
+
+	#modalBtn {
+		width: 1.5rem;
+		height: auto;
+	}
+
+	#simpleStopTable th{
+		font-size: 1rem;
+	}
+
+	.tabs-and-table-container {
+		margin-top: 1rem;
+	}
+
+	#stop-details-header {
+		margin-bottom: 0.5rem;
+	}
+
+	#stop-search-input, #stop-search-button {
+		font-size: 1rem;
+		margin-bottom: 0.25rem;
+		margin-top: 0.15rem;
+	}
+
+	.calendar-div input {
+		font-size: 0.8rem;
+	}
+
+	#interactive-map-header {
+		margin-bottom: 0.25rem;
+	}
+
+	#interactive-map-search-input {
+		font-size: 1rem;
+	}
+
+	#interactive-map-search-button {
+		font-size: 1rem;
+	}
+
+	@media (min-height: 600px) {
+		.modal-content-main {
+			height: 80%;
+			max-width: 100%;
+			width: 100%;
+			margin: 2rem 0;
+		}
+	
+	}
+}
+
+@media (max-width: 1200px) {
+    #inner-body {
+        flex-direction: row;
+        font-size: 1.2rem;
+		min-width: 70%;
+    }
+    #nav-container {
+        width: 10%;
+		margin-right: 1rem;
+		margin-left: 0.5rem;
+    }
+    .nav-button {
+        font-size: 1em;
+    }
+
+    #main-content {
+        width: 60%;
+    }
+
+	#routes {
+		width: auto;
+	}
+	
+    #routes_table {
+        width: 100%;
+		display: flex;
+		flex-direction: column;
+		height: 50rem;
+		flex-wrap: wrap;
+    }
+	.route_row{
+		width: auto;
+		font-size: 0.9rem;
+		margin: 0;
+		display: flex;
+		flex-direction: row;
+	}
+
+	.route_id {
+		width: auto;
+	}
+
+	.route_name {
+		width: auto;
+		margin-right: 1rem;
+	}
+
+    #routeMap {
+        width: 40%;
+        height: 50%;
+    }
+	#tripPlanner {
+		width: 35%;
+		height: 27rem;
+	}
+
+	#TP-interactiveMap-btn {
+		margin-left: 0.9rem;
+	}
+
+	#google-form button {
+		margin-right: 2.5rem;
+	}
+
+	.route-stop-time, .route-name, #stop-selection, #served-by-routes{
+		font-size: 1rem;
+	}
+
+	.stop-table-route-header, .stop-table-time-header {
+		font-size: 1rem;
+	}
+
+	#stops-route-dropdown-div label {
+		font-size: 1rem;
+	}
+	
+}
+
+@media (max-height: 500px) {
+	.stop-name, .stop-time {
+		font-size: 0.8rem;
+	}
+
+	.direction-table-div {
+		min-height: 800px;
+	}
+}
+
+@media (orientation: portrait) and (max-width: 1200px) and (pointer: coarse){
+	#Container {
+		flex-direction: column;
+		width: 100%;
+		height: 100%;
+	}
+
+	#nav-container {
+		display: none;
+	}
+
+	#routes {
+		margin-left: 0rem;
+	}
+
+	#routes_table {
+		height: auto;
+	}
+
+	.content-header {
+		font-size: 2.25rem;
+		margin-top: 0.5rem;
+	}
+
+	#route-details-header {
+		margin-left: 0rem;
+		margin-bottom: 0.5rem;
+	}
+
+	body .tabs-button {
+		font-size: 0.9rem;
+		height: 4rem;
+	}
+
+	#main-content {
+		width: 100%;
+	}
+
+	#inner-body {
+		width: 100%;
+	}
+
+	#route-details {
+		width: 100%;
+	}
+
+	.tabs-and-table-container {
+		margin: 0;
+	}
+
+	.direction-table-div {
+		height: auto;
+	}
+
+	.route_row {
+		font-size: 2.5rem;
+	}
+
+	#tripPlanner {
+		width: 100%;
+		margin: auto;
+		height: auto;
+	}
+
+	#routeMap {
+		width: auto;
+	}
+
+	#routeMapImage {
+		max-height: min-content;
+		width: auto;
+	}
+
+	#TP-title {
+		margin-top: 1rem;
+		font-size: 1.5rem;
+		margin-left: 1.5rem;
+		font-weight: bold;
+	}
+
+	#google-form {
+		width: 100%;
+		height: auto;
+	}
+
+	#initandEnd input{
+		width: 90%;
+		font-size: 1rem;
+		margin-left: 0.5rem;
+		max-height: 2rem;
+	}
+
+	#initandEnd a{
+		font-size: 0.8rem;
+		margin-left: 0.5rem;
+		width: 90%;
+	}
+
+	#google-form button {
+		height: 7rem;
+    	width: 7rem;
+    	border: none;
+    	border-radius: 100%;
+    	white-space: normal;
+    	margin-right: 4rem;
+		margin-left: 0;
+		padding-left: 0;
+		font-size: 1.8rem;
+		margin-top: -1rem;
+	}
+
+	#TP-routelist h3 {
+		font-size: 1.5rem;
+		margin-left: 0.75rem;
+		font-weight: bold;
+	}
+
+	body #TP-routelist select {
+		font-size: 1rem;
+		margin-left: 0.75rem;
+		height: 2rem;
+		width: 70%;
+	}
+
+	#TP-stopsearch h3 {
+		font-size: 1.5rem;
+		margin-left: 0.75rem;
+		font-weight: bold;
+	}
+
+	body #TP-stopsearch input {
+		font-size: 1rem;
+		margin-left: 0.75rem;
+		height: 2rem;
+		width: 70%;
+	}
+
+	#TP-interactivemap h3 {
+		font-size: 1.5rem;
+		margin-left: 0.75rem;
+		font-weight: bold;
+	}
+
+	body #TP-interactivemap p {
+		font-size: 1rem;
+		margin-left: 0.75rem;
+		margin-right: 1rem;
+		margin-bottom: 1rem;
+		width: auto;
+	}
+
+	#TP-interactivemap button {
+		margin-bottom: 1rem;
+		margin-right: 1.35rem;
+	}
+
+	.TP-button {
+		width: 30%;
+		font-size: 1rem;
+		padding: 1rem 1rem 1rem 1rem;
+		line-height: 0rem;
+	}
+
+	#stop-details-header {
+		margin-bottom: 0.5rem;
+	}
+
+	#stop-search-input {
+		font-size: 1rem;
+	}
+
+	#stop-search-button {
+		font-size: 1rem;
+		margin-top: 0.2rem;
+	}
+
+	#printThis, #simpleStopTable {
+		margin-left: 1rem;
+		
+	}
+
+	#stop-details-name {
+		width: 80%;
+	}
+
+	#stop-schedule {
+		margin-left: 1rem;
+		margin-right: 1rem;
+	}
+
+	#find-option {
+		margin-top: 0.1rem;
+	}
+
+	#stops-table-container {
+		width: 100%;	
+	}
+
+	.stop-table-time-header, .stop-table-route-header{
+		font-size: 1rem;
+	}
+
+	.route-stop-time, .route-name {
+		font-size: 1rem;
+		padding: 0.5rem 2rem;
+	}
+
+	#stop-option {
+		height: 1.5rem;
+    	border: 1px solid #8E8E8E;
+    	border-radius: 0.2rem;
+		font-size: 0.9rem;
+	}
+
+	#stops-calendar {
+		font-size: 0.9rem;
+	}
+
+	#simpleStopTable th {
+		padding-left: 0;
+	}
+
+	#interactive-map-search-input {
+		height: 2rem;
+	}
+
+	#interactive-map-search-button {
+		font-size: 1rem;
+		max-height: 40px;
+		line-height: 34px;
+		margin-bottom: 3px;
+		margin-top: 3px;
+	}
+
+	#interactive-map-header {
+		margin-bottom: 0.5rem;
+	}
+
+} 
+
+@media (max-width: 930px) {
+    #Container {
+		flex-direction: column;
+		width: 100%;
+	}
+	#tripPlanner {
+		width: auto;
+		margin: 0;
+		border-left: 0;
+		border-bottom: 0;
+		border-radius: 0 0 0 0;
+	}
+
+	#google-form button {
+		margin-right: 2.5rem;
+	}
+
+	#TP-routelist select{
+		width: 80%;
+	}
+
+	#TP-routelist button {
+		width: auto;
+	}
+
+	#TP-stopsearch input {
+		width: 80%;
+	}
+
+	#TP-stopsearch button {
+		width: auto;
+	}
+
+	#TP-interactivemap p {
+		width: 80%;
+		font-size: 0.8rem;
+	}
+
+	#TP-interactivemap button{
+		width: auto;
+	}
+
+	body #inner-body {
+		width: 90%;
+	}
+	#routes-details {
+		width: 100%;
+	}
+
+	.calendar,
+	.stops-selector {
+		width: 90%;
+		margin-left: 5%;
+	}
+
+	.stops-selector {
+		margin-top: 1px;
+	}
+
+	#selector-buttons {
+		display: flex;
+		flex-direction: row;
+	}
+
+	#selector-buttons button {
+		flex: 1;
+		margin: 0.5em 1em 0 5%;
+	}
+}
+
+@media (min-width: 1201px) {
+    #inner-body {
+        flex-direction: row;
+        font-size: 1.2em;
+		min-width: 75%;
+    }
+    #nav-container {
+        width: 10%;
+        margin-right: 1em;
+		margin-left: 0.5em;
+    }
+    #main-content {
+        width: 65%;
+    }
+	#routes {
+		width: auto;
+	}
+    #routes_table {
+        width: 100%;
+		display: flex;
+		flex-direction: column;
+		height: 50rem;
+    }
+	.route_row {
+		width: auto;
+		font-size: 1rem;
+		margin: 0;
+		display: flex;
+		flex-direction: row;
+		margin-right: 7rem;
+	}
+
+	.route_id {
+		width: auto;
+	}
+
+	.route_name {
+		width: auto;
+		margin-right: 1rem;
+	}
+
+    #routeMap {
+        width: 30%;
+        height: 40%;
+    }
+
+	#tripPlanner {
+		width: 35%;
+	}
+
+	#google-form button {
+		margin-right: 2.5rem;
+	}
+
+	#stop-selection, #served-by-routes {
+		font-size: 1rem;
+	}
+
+	.stop-table-time-header, .stop-table-route-header, .route-stop-time, .route-name {
+		font-size: 1rem;
+	}
+
+	#stops-route-dropdown-div label {
+		font-size: 1rem;
+	}
+
+	#TP-interactiveMap-btn {
+		margin-left: 0.9rem;
+	}
+}
+
+

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<script src="scripts/utils.js"></script>
+<script src="scripts/dates.js"></script>
+<script src="scripts/rt.js"></script>
+<script src="scripts/routes.js"></script>
+<script src="scripts/trip-planner.js"></script>
+<script src="scripts/route-details.js"></script>
+<script src="scripts/stop-details.js"></script>
+<script src="scripts/main.js"></script>
+
+<script>
+	(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+    key: '{{ env.MAPS_API_KEY }}',
+    v: "weekly",
+    // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+    // Add other bootstrap parameters as needed, using camel case.
+  });
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="scripts/maps.js"></script>
+<head>
+	<title>WTA Schedules</title>
+    <link rel="stylesheet", href="css/style.css">
+	<link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/newstyle.css">
+	<link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+</head>
+<body>
+    {% include "partials/header.njk" %}
+
+	<div id="Container">
+
+		<div id="inner-body">
+
+			<div id="nav-container">
+				<button class="nav-button" id="routes-nav-button" data-active="false" onclick=change_url_to_routes()>Routes</button>
+				<button class="nav-button" id="stops-nav-button" data-active="false" onclick=change_url_to_stop_details("2001");>Stops</button>
+				<button class="nav-button" id="map-nav-button" data-active="false" onclick=change_url_to_interactive_map()>Map</button>
+			</div>
+
+			<div id="main-content">
+				<div id="routes">
+					<h2 class="content-header">Routes</h2>
+					<table id="routes_table" translate="no"></table>
+				</div>
+				<div id="route-details">
+					<h2 id="route-details-header" class="content-header">Route <span translate="no">? - to ?</span></h2>
+					
+					<div class="tabs-and-table-container">
+						<div class="tabsMain" id="route-tabs">
+							<div class="tabs-topbar">
+								<button class="tabs-button" data-active="false" id="route-weekday-tab">Weekday</button>
+								<button class="tabs-button" data-active="false" id="route-saturday-tab">Saturday</button>
+								<button class="tabs-button" data-active="false" id="route-sunday-tab">Sunday</button>
+								<button class="tabs-button" data-active="false" id="route-map-tab">Route Map</button>
+							</div>
+							
+							<div class="tabs-topbar" id="direction-tabs-topbar" translate="no">
+								<button class="tabs-button" id="destinationDirectionButton" data-active="false">to DIRECTION_1</button>
+								<button class="tabs-button" id="downtownDirectionButton" data-active="false">to DIRECTION_0</button>
+							</div>
+							
+							<div class="controls-container" style="padding: 0.75em">
+								<div class="calendar-div">
+									<label for="routes-calendar">Schedule for: </label>
+									<input type="date" class="calendar" id="routes-calendar" value="12">							
+								</div>
+								<div class="stop-selector-div">
+									<label for="stops-selector-from">Show Stops:</label>
+									<select class="stops-selector" id="stops-selector-from">
+									</select>					
+									<select class="stops-selector" id="stops-selector-to">
+									</select>
+									<div id="selector-buttons">
+										<button id="apply-stop-selection">Apply</button>
+										<button id="clear-stop-selection">Clear</button>
+									</div>
+								</div>
+							</div>
+
+							{# <div class="calendar-div">
+								<label for="routes-calendar">Schedule for: </label>
+								<input type="date" class="calendar" id="routes-calendar" value="12">							
+							</div> #}
+						</div>
+						<div class="table-container" id="trips-table-container" data-routeNum="">						
+							<div class="direction-table-div" id="to-destination-details" data-direction-name=""></div>
+							<div class="direction-table-div" id="to-downtown-details" data-direction-name=""></div>
+							<div id="routeMap">
+								<img id="routeMapImage" src="">
+								<img src="img/magnifying-glass-plus-solid.svg" alt="Magnifying Glass Plus Icon" id="modalBtn">
+								<div id="myModal" class="modal">
+									<div class="modal-content-main">
+										<span class="close">&times;</span>
+										<img id="routeMapImageModal" src="">
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+
+				<div id="stop-details">
+					<h2 id="stop-details-header" class="content-header">My Stop:</h2>
+					<div class="search-stop-div">
+						<input type="text" value="temp" id="stop-search-input" placeholder="Enter Stop Code, Address, or Intersection">
+						<button id="stop-search-button" onClick=stop_search()>Find</button>
+					</div>
+
+					<div class="tabsMain" id="stop-tabs">
+						<div class="tabs-topbar">
+							<button class="tabs-button" data-for-tab="1" data-active="false" id="stop-weekday-tab">Weekday</button>
+							<button class="tabs-button" data-for-tab="2" data-active="false" id="stop-saturday-tab">Saturday</button>
+							<button class="tabs-button" data-for-tab="3" data-active="false" id="stop-sunday-tab">Sunday</button>
+							<button class="tabs-button" data-for-tab="4" data-active="false" id="stop-streetview-tab">Street View</button>
+						</div>
+
+						<div id="stop-info">
+							<div id="printThis">
+								<div id="streetInfo" translate="no">
+									<h3 id="stop-details-name"> </h3>
+									<p id="cityZip">CITY, ZIP</p>
+								</div>
+								<div>
+									<button type="submit" value="Map StopID" id="mapStopID">Map</button>
+								</div>
+
+							</div>
+
+							<table id="simpleStopTable">
+								<tbody>
+									<th>Stop ID</th>
+									<th>Served By</th>
+									<tr translate="no">
+										<td id="stop-selection"></td>
+										<td id="served-by-routes"></td>
+									</tr>
+								</tbody>
+							</table>
+
+							<div id="stop-schedule">				
+								<div class="calendar-div" id="stops-calendar-div">					
+									<label for="stop-date">Date:</label>
+									<input type="date" class="calendar" id="stops-calendar" value=""> <br/>
+								</div>
+								<div id="stops-route-dropdown-div">
+									<label for="stop-dragdown">Schedule for:</label>
+									<select name="stop-dragdown" id="stop-option"></select>
+									<button id="find-option">Apply</button>
+								</div>	
+							
+								<div id="stops-table-container"> </div>
+							</div>
+						</div>
+
+						<div id="stop-streetview"></div>
+					</div>      
+				</div>
+				<div id="interactive-map-container">
+					<h2 id="interactive-map-header" class="content-header">Interactive Map</h2>
+					<div class="search-stop-div">
+						<input type="text" value="" id="interactive-map-search-input" placeholder="Enter Stop Code, Address, or Intersection">
+						<button id="interactive-map-search-button" onClick=codeAddressMap()>Find</button>
+					</div>
+					<div id="map-location-error-box"></div>
+					<div id="interactive-map"></div>
+				</div>
+			</div>
+
+		</div>
+
+		<div id="tripPlanner">
+			<h3 id=TP-title>Trip Planner</h3>
+			<div id="google-form">
+				<div id="initandEnd">
+					<input type="text" id="initial" placeholder="Start">
+					<a id="initialBtn">use my current location</a>
+					<input type="text" id="endLocation" placeholder="End">
+					<a id="endLocationBtn">use my current location</a>
+				</div>
+				<button type="submit" value="Plan Trip" id="planTripBtn">Plan Trip</button>
+			</div>
+
+			<div id="TP-routelist">
+				<h3>Routes</h3>
+				<select id="selRoutes"></select>
+				<button type="submit" value="Find" class="TP-button" id="TP-route-submit-btn">Find</button>
+			</div>
+
+			<div id="TP-stopsearch">
+				<h3>My Stop</h3>
+				<input type="text" placeholder="Enter Stop ID, Address or Intersection" id="TP-stop-search">
+				<button type="submit" value="Find" class="TP-button" id="TP-stop-submit-btn">Find</button>
+			</div>
+
+			<div id=TP-interactivemap>
+				<h3>Interactive Map</h3>
+				<div class="TP-map-container">
+					<p>Our interactive map displays our routes and stops.</p>
+					<button type="submit" value="Find" class="TP-button" id="TP-interactiveMap-btn">Find</button>
+				</div>
+			</div>
+		</div>
+	
+	</div>
+
+    {% include "partials/footer.njk" %}
+</body>
+
+<script>main()</script>
+
+</html>
+
